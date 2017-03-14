@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.canvas.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
@@ -9,11 +10,11 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
-      <CheckBox fx:id="keepSeed" layoutX="26.0" layoutY="756.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="143.0" text="Keep Seed" />
-      <Button layoutX="26.0" layoutY="720.0" mnemonicParsing="false" onMouseClicked="#scramble" prefHeight="25.0" prefWidth="201.0" text="Scramble" />
-      <Text fx:id="seedField" layoutX="112.0" layoutY="769.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="114.59375" />
+      <CheckBox fx:id="keepSeed" layoutX="26.0" layoutY="803.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="143.0" text="Keep Seed" />
+      <Button layoutX="25.0" layoutY="772.0" mnemonicParsing="false" onMouseClicked="#scramble" prefHeight="25.0" prefWidth="201.0" text="Scramble" />
+      <Text fx:id="seedField" layoutX="112.0" layoutY="816.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="114.59375" />
       <Text layoutX="26.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sorting Algorithms" />
       <Button layoutX="26.0" layoutY="64.0" mnemonicParsing="false" onMouseClicked="#algo1" prefHeight="25.0" prefWidth="100.0" text="Button" />
       <Button layoutX="26.0" layoutY="100.0" mnemonicParsing="false" onMouseClicked="#algo2" prefHeight="25.0" prefWidth="100.0" text="Button" />
@@ -22,5 +23,6 @@
       <Text fx:id="comparisons" layoutX="26.0" layoutY="642.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Comparisons" />
       <Text fx:id="accesses" layoutX="26.0" layoutY="672.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Accesses" />
       <Text fx:id="time" layoutX="26.0" layoutY="699.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time" />
+      <Pane fx:id="drawingPane" layoutX="266.0" layoutY="25.0" prefHeight="800.0" prefWidth="800.0" />
    </children>
 </Pane>
