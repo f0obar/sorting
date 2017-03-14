@@ -5,6 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.collections.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.control.Button?>
@@ -16,10 +17,6 @@
       <Button layoutX="25.0" layoutY="772.0" mnemonicParsing="false" onMouseClicked="#scramble" prefHeight="25.0" prefWidth="201.0" text="Scramble" />
       <Text fx:id="seedField" layoutX="112.0" layoutY="816.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="114.59375" />
       <Text layoutX="26.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sorting Algorithms" />
-      <Button layoutX="26.0" layoutY="64.0" mnemonicParsing="false" onMouseClicked="#algo1" prefHeight="25.0" prefWidth="100.0" text="Button" />
-      <Button layoutX="26.0" layoutY="100.0" mnemonicParsing="false" onMouseClicked="#algo2" prefHeight="25.0" prefWidth="100.0" text="Button" />
-      <Button layoutX="26.0" layoutY="138.0" mnemonicParsing="false" onMouseClicked="#algo3" prefHeight="25.0" prefWidth="100.0" text="Button" />
-      <Button layoutX="26.0" layoutY="174.0" mnemonicParsing="false" onMouseClicked="#algo4" prefHeight="25.0" prefWidth="100.0" text="Button" />
       <Text layoutX="26.0" layoutY="642.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Comparisons" />
       <Text layoutX="26.0" layoutY="672.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Accesses" />
       <Text layoutX="26.0" layoutY="699.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time" />
@@ -27,5 +24,20 @@
       <Text fx:id="comparisons" layoutX="112.0" layoutY="642.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="114.59375" />
       <Text fx:id="accesses" layoutX="112.0" layoutY="672.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="114.59375" />
       <Text fx:id="time" layoutX="112.0" layoutY="699.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="114.59375" />
+      <Slider fx:id="delaySlider" layoutX="28.0" layoutY="576.0" />
+      <Text layoutX="25.0" layoutY="565.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Delay" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="140.0" />
+      <ChoiceBox fx:id="choiceBox" layoutX="23.0" layoutY="54.0" prefWidth="150.0" value="Bubble Sort1" >
+         <items>
+            <FXCollections fx:factory="observableArrayList">
+               <String fx:value="Bubble Sort1" />
+               <String fx:value="Bubble Sort2" />
+               <String fx:value="Bubble Sort3" />
+               <String fx:value="Quick Sort Lomuto" />
+               <String fx:value="Quick Sort Hoare" />
+               <String fx:value="Bogo Sort" />
+            </FXCollections>
+         </items>
+      </ChoiceBox>
+      <Button layoutX="24.0" layoutY="92.0" mnemonicParsing="false" onAction="#sort" prefHeight="25.0" prefWidth="150.0" text="SORT" />
    </children>
 </Pane>
