@@ -153,7 +153,6 @@ public class Controller {
         do{
             sorted = true;
             //Compare
-            System.out.println(lines.length);
             for(int n = 0; n<lines.length; n++){
                 if(needToSwap(n,n+1)) {
                     sorted = false;
