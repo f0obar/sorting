@@ -1,5 +1,7 @@
 package sample;
 
+import com.sun.javafx.tk.Toolkit;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.CheckBox;
@@ -12,10 +14,11 @@ import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Text;
 
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
 
 public class Controller {
 
-    private Line[] lines = new Line[800];
+    public Line[] lines = new Line[800];
     private long timeAtStart;
 
 
@@ -32,7 +35,7 @@ public class Controller {
     private Text comparisons;
 
     @FXML
-    private ChoiceBox<?> choiceBox;
+    public ChoiceBox<?> choiceBox;
 
     @FXML
     private ChoiceBox<?> choiceBoxMode;
@@ -141,155 +144,31 @@ public class Controller {
             line.setStrokeWidth(1);
             drawingPane.getChildren().add(line);
         }
+
+        for(int x = 0; x<800; x++){
+            Sorter.values[x] = (int) (800 - lines[x].getEndY() - 0.5);
+        }
     }
 
     @FXML
     void sort() {
-        reset();
-        startTime();
-        switch ((String)choiceBox.getValue()){
-            case "Bubble Sort1": {
-                bubbleSort1();
-                break;
-            }
-            case "Bubble Sort2": {
-                bubbleSort2();
-                break;
-            }
-            case "Bubble Sort3": {
-                bubbleSort3();
-                break;
-            }
-            case "Quick Sort Lomuto": {
-                quickSortLomuto();
-                break;
-            }
-            case "Quick Sort Hoare": {
-                quickSortHoare();
-                break;
-            }
-            case "Bogo Sort": {
-                bogoSort();
-                break;
-            }
-        }
-        stopTime();
+        Sorter.kek = (String)choiceBox.getValue();
+        Sorter sorter = new Sorter(this);
+        new Thread(sorter).start();
     }
 
-    private void bubbleSort1(){
-        for(int n = lines.length; n>1; n--){
-            for(int i=0; i<n-1;i++){
-                if(needToSwap(i,i+1)){
-                    swap(i,i+1);
-                }
-            }
-        }
+    public void updateLine(int index, int value){
+        lines[index].setEndY(800 - value + 0.5);
     }
 
-    private void bubbleSort2(){
-        int n = lines.length;
-        boolean swapped;
-        do{
-            swapped = false;
-            for(int i = 0; i<n-1; i++){
-                if(needToSwap(i,i+1)){
-                    swap(i,i+1);
-                    swapped = true;
-                }
-            }
-        }while (swapped);
+    public void updateTime(long value){
+        time.setText(Long.toString(value));
     }
-
-    private void bubbleSort3(){
-        int n = lines.length;
-
-        do{
-            int newN = 1;
-            for(int i = 0; i<n-1; i++){
-                if (needToSwap(i,i+1)){
-                    swap(i,i+1);
-                    newN = i+1;
-                }
-            }
-            n = newN;
-        }while (n>1);
+    public void updateComparisons(int value){
+        comparisons.setText(Integer.toString(value));
     }
-
-    private void quickSortLomuto(){
-
+    public void updateAccesses(int value){
+        accesses.setText(Integer.toString(value));
     }
-
-    private void quickSortHoare(){
-
-    }
-
-    private void bogoSort(){
-        boolean sorted;
-
-        do{
-            sorted = true;
-            //Compare
-            for(int n = 0; n<lines.length -1; n++){
-                if(needToSwap(n,n+1)) {
-                    sorted = false;
-                    break;
-                }
-            }
-
-            if(!sorted){
-                //Scramble
-                Random rnd = new Random(System.currentTimeMillis());
-                swap(rnd.nextInt(800), rnd.nextInt(800));
-                swap(rnd.nextInt(800), rnd.nextInt(800));
-                swap(rnd.nextInt(800), rnd.nextInt(800));
-                swap(rnd.nextInt(800), rnd.nextInt(800));
-                swap(rnd.nextInt(800), rnd.nextInt(800));
-                swap(rnd.nextInt(800), rnd.nextInt(800));
-                swap(rnd.nextInt(800), rnd.nextInt(800));
-                swap(rnd.nextInt(800), rnd.nextInt(800));
-                swap(rnd.nextInt(800), rnd.nextInt(800));
-                swap(rnd.nextInt(800), rnd.nextInt(800));
-            }
-        }while (!sorted);
-    }
-
-
-
-    /**
-     * @return true when the line 1 is smaller than line 2
-     */
-    private boolean needToSwap(int index1, int index2){
-        comparisons.setText(Integer.toString(Integer.parseInt(comparisons.getText()) + 1));
-        return (lines[index1].getEndY() < lines[index2].getEndY());
-    }
-
-    private void swap(int index1, int index2){
-        Line temp = lines[index1];
-        lines[index1] = lines[index2];
-        lines[index2] = temp;
-
-        lines[index1].setStartX(index1 + 0.5);
-        lines[index1].setEndX(index1 + 0.5);
-
-        lines[index2].setStartX(index2 + 0.5);
-        lines[index2].setEndX(index2 + 0.5);
-
-        accesses.setText(Integer.toString(Integer.parseInt(accesses.getText()) + 1));
-    }
-
-    private void reset(){
-        comparisons.setText("0");
-        accesses.setText("0");
-        time.setText("0");
-    }
-
-    private void startTime(){
-        timeAtStart = System.currentTimeMillis();
-    }
-
-    private void stopTime(){
-        time.setText("" + (System.currentTimeMillis() - timeAtStart));
-    }
-
 }
 
