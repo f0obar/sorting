@@ -24,8 +24,8 @@
       <Text fx:id="comparisons" layoutX="112.0" layoutY="642.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="114.59375" />
       <Text fx:id="accesses" layoutX="112.0" layoutY="672.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="114.59375" />
       <Text fx:id="time" layoutX="112.0" layoutY="699.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="114.59375" />
-      <Slider fx:id="delaySlider" blockIncrement="1.0" layoutX="28.0" layoutY="576.0" majorTickUnit="10.0" max="10.0" minorTickCount="10" showTickLabels="true" showTickMarks="true" />
-      <Text layoutX="25.0" layoutY="565.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Delay" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="140.0" />
+      <Slider fx:id="delaySlider" blockIncrement="1.0" layoutX="28.0" layoutY="576.0" majorTickUnit="10.0" minorTickCount="1" prefHeight="37.0" prefWidth="201.0" showTickLabels="true" showTickMarks="true" />
+      <Text layoutX="25.0" layoutY="557.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Delay" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="201.0" />
       <ChoiceBox fx:id="choiceBox" layoutX="23.0" layoutY="54.0" prefWidth="150.0" value="Bubble Sort1">
          <items>
             <FXCollections fx:factory="observableArrayList">
