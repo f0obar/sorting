@@ -149,7 +149,7 @@ public class Sorter extends Task{
         int i = lo -1;
         for(int j = lo; j <= hi-1;j++){
             comparison();
-            if(values[j] <= pivot){
+            if(values[j] < pivot){
                 i+=1;
                 swap(i,j);
             }

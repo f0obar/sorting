@@ -153,7 +153,7 @@ public class Controller {
         } else {
             Sorter sorter = new Sorter(this);
             for (int x = 0; x < 800; x++) {
-                sorter.values[x] = (int) (800 - lines[x].getEndY() - 0.5);
+                sorter.values[x] = (int) (800 - lines[x].getEndY() + 0.5);
             }
             sorterThread = new Thread(sorter);
             sorterThread.start();
