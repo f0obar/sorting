@@ -34,6 +34,10 @@
                <String fx:value="Bubble Sort3" />
                <String fx:value="Quick Sort Lomuto" />
                <String fx:value="Quick Sort Hoare" />
+               <String fx:value="Insertion Sort" />
+               <String fx:value="Smooth Sort" />
+               <String fx:value="Heap Sort" />
+               <String fx:value="Merge Sort" />
                <String fx:value="Bogo Sort" />
             </FXCollections>
          </items>

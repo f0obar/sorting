@@ -57,6 +57,22 @@ public class Sorter extends Task{
                 bogoSort();
                 break;
             }
+            case "Insertion Sort":{
+                insertionSort();
+                break;
+            }
+            case "Smooth Sort":{
+                insertionSort();
+                break;
+            }
+            case "Heap Sort":{
+                insertionSort();
+                break;
+            }
+            case "Merge Sort":{
+                insertionSort();
+                break;
+            }
         }
         Platform.runLater(() -> controller.updateTime(System.currentTimeMillis() - time));
     }
@@ -187,6 +203,21 @@ public class Sorter extends Task{
                 swap(rnd.nextInt(800), rnd.nextInt(800));
             }
         }while (!sorted);
+    }
+
+    private void insertionSort(){
+        for(int i = 1; i< values.length; i++){
+            int j = i;
+            while(j > 0){
+                comparison();
+                if(values[j-1] > values[j]) {
+                    swap(j - 1, j);
+                    j -= 1;
+                } else {
+                    break;
+                }
+            }
+        }
     }
 
 
