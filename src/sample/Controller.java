@@ -20,7 +20,7 @@ import java.util.concurrent.ExecutorService;
 public class Controller {
 
     private Line[] lines = new Line[800];
-    private Task sorterThread;
+    private Thread sorterThread;
 
     @FXML
     private Text seedField;
@@ -148,16 +148,15 @@ public class Controller {
 
     @FXML
     void sort() {
-        if(sorterThread != null){
-            sorterThread.cancel();
-            sorterThread = null;
+        if(sorterThread != null && sorterThread.isAlive()){
+            sorterThread.stop();
         } else {
             Sorter sorter = new Sorter(this);
             for (int x = 0; x < 800; x++) {
                 sorter.values[x] = (int) (800 - lines[x].getEndY() - 0.5);
             }
-            sorterThread = sorter;
-            new Thread(sorter).start();
+            sorterThread = new Thread(sorter);
+            sorterThread.start();
         }
     }
 

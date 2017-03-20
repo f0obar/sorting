@@ -46,11 +46,11 @@ public class Sorter extends Task{
                 break;
             }
             case "Quick Sort Lomuto": {
-                quickSortLomuto();
+                quickSortLomuto(0, values.length -1);
                 break;
             }
             case "Quick Sort Hoare": {
-                quickSortHoare();
+                quickSortHoare(0, values.length -1);
                 break;
             }
             case "Bogo Sort": {
@@ -64,7 +64,8 @@ public class Sorter extends Task{
     private void bubbleSort1(){
         for(int n = values.length; n>1; n--){
             for(int i=0; i<n-1;i++){
-                if(needToSwap(i,i+1)){
+                comparison();
+                if(values[i] > values[i + 1]){
                     swap(i,i+1);
                 }
             }
@@ -77,7 +78,8 @@ public class Sorter extends Task{
         do{
             swapped = false;
             for(int i = 0; i<n-1; i++){
-                if(needToSwap(i,i+1)){
+                comparison();
+                if(values[i] > values[i+1]){
                     swap(i,i+1);
                     swapped = true;
                 }
@@ -90,7 +92,8 @@ public class Sorter extends Task{
         do{
             int newN = 1;
             for(int i = 0; i<n-1; i++){
-                if (needToSwap(i,i+1)){
+                comparison();
+                if (values[i] > values[i+1]){
                     swap(i,i+1);
                     newN = i+1;
                 }
@@ -99,12 +102,60 @@ public class Sorter extends Task{
         }while (n>1);
     }
 
-    private void quickSortLomuto(){
-
+    private void quickSortHoare(int lo, int hi){
+        comparison();
+        if(lo < hi){
+            int p = partitionHoare(lo, hi);
+            quickSortHoare(lo, p);
+            quickSortHoare(p+1,hi);
+        }
     }
 
-    private void quickSortHoare(){
+    private int partitionHoare(int lo, int hi){
+        int pivot = values[lo];
+        int i = lo -1;
+        int j = hi + 1;
 
+        while (true){
+            do{
+                i+=1;
+                comparison();
+            } while (values[i] < pivot);
+
+            do{
+                j-=1;
+                comparison();
+            } while (values[j] > pivot);
+
+            comparison();
+            if(i >= j)
+                return j;
+
+            swap(i,j);
+        }
+    }
+
+    private void quickSortLomuto(int lo, int hi){
+        comparison();
+        if(lo < hi){
+            int p = partitionHoare(lo, hi);
+            quickSortHoare(lo, p - 1);
+            quickSortHoare(p+1,hi);
+        }
+    }
+
+    private int partitionLomuto(int lo, int hi){
+        int pivot = values[hi];
+        int i = lo -1;
+        for(int j = lo; j <= hi-1;j++){
+            comparison();
+            if(values[j] <= pivot){
+                i+=1;
+                swap(i,j);
+            }
+        }
+        swap(i+1,hi);
+        return i+1;
     }
 
     private void bogoSort(){
@@ -113,8 +164,9 @@ public class Sorter extends Task{
         do{
             sorted = true;
             //Compare
-            for(int n = 0; n<values.length -1; n++){
-                if(needToSwap(n,n+1)) {
+            for(int i = 0; i<values.length -1; i++){
+                comparison();
+                if(values[i] < values[i+1]) {
                     sorted = false;
                     break;
                 }
@@ -138,18 +190,16 @@ public class Sorter extends Task{
     }
 
 
-    private boolean needToSwap(int index1, int index2){
+    private void comparison(){
         if(this.isCancelled()){
-            return false;
+            this.done();
         }
-        long delay = System.nanoTime();
-        //active waiting because of windows scheduler reasons.
-        while (System.nanoTime() < (delay + controller.delaySlider.getValue()*10000)){}
-
         comparisons += 1;
         Platform.runLater(() -> controller.updateComparisons(comparisons));
 
-        return (values[index1] > values[index2]);
+        long delay = System.nanoTime();
+        //active waiting because of windows scheduler reasons.
+        while (System.nanoTime() < (delay + controller.delaySlider.getValue()*10000)){}
     }
 
     private void swap(int index1, int index2){
