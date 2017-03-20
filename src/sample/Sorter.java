@@ -2,6 +2,7 @@ package sample;
 
 import com.sun.javafx.tk.Toolkit;
 import javafx.application.Platform;
+import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.scene.shape.Line;
 
@@ -13,28 +14,25 @@ import java.util.Random;
 public class Sorter extends Task{
 
 
-    public static int[] values = new int[800];
-    public static int comparisons = 0;
-    public static int accesses = 0;
-    public static long time = 0;
-    public static Controller controller;
-    public static String kek = "";
+    public int[] values = new int[800];
+    public int comparisons = 0;
+    public int accesses = 0;
+    public long time = 0;
+    public Controller controller;
 
     public Sorter(Controller controller){
-        Sorter.controller = controller;
+        this.controller = controller;
     }
 
     @Override
     public void run(){
-        comparisons = 0;
-        controller.updateComparisons(0);
-        accesses = 0;
-        controller.updateAccesses(0);
+        Platform.runLater(() -> controller.updateComparisons(0));
+        Platform.runLater(() -> controller.updateTime(0));
+        Platform.runLater(() -> controller.updateAccesses(0));
+
         time = System.currentTimeMillis();
-        controller.updateTime(0);
 
-
-        switch (kek){
+        switch ((String)controller.choiceBox.getValue()){
             case "Bubble Sort1": {
                 bubbleSort1();
                 break;
@@ -141,12 +139,16 @@ public class Sorter extends Task{
 
 
     private boolean needToSwap(int index1, int index2){
+        if(this.isCancelled()){
+            return false;
+        }
         long delay = System.nanoTime();
         //active waiting because of windows scheduler reasons.
         while (System.nanoTime() < (delay + controller.delaySlider.getValue()*10000)){}
 
         comparisons += 1;
         Platform.runLater(() -> controller.updateComparisons(comparisons));
+
         return (values[index1] > values[index2]);
     }
 
@@ -164,10 +166,13 @@ public class Sorter extends Task{
 
         Platform.runLater(() -> controller.updateLine(index1, values[index1]));
         Platform.runLater(() -> controller.updateLine(index2, values[index2]));
+
+
     }
+
 
     @Override
     protected Object call() throws Exception {
-        return null;
+       return null;
     }
 }

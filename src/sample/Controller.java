@@ -2,6 +2,7 @@ package sample;
 
 import com.sun.javafx.tk.Toolkit;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.CheckBox;
@@ -18,9 +19,8 @@ import java.util.concurrent.ExecutorService;
 
 public class Controller {
 
-    public Line[] lines = new Line[800];
-    private long timeAtStart;
-
+    private Line[] lines = new Line[800];
+    private Task sorterThread;
 
     @FXML
     private Text seedField;
@@ -144,17 +144,21 @@ public class Controller {
             line.setStrokeWidth(1);
             drawingPane.getChildren().add(line);
         }
-
-        for(int x = 0; x<800; x++){
-            Sorter.values[x] = (int) (800 - lines[x].getEndY() - 0.5);
-        }
     }
 
     @FXML
     void sort() {
-        Sorter.kek = (String)choiceBox.getValue();
-        Sorter sorter = new Sorter(this);
-        new Thread(sorter).start();
+        if(sorterThread != null){
+            sorterThread.cancel();
+            sorterThread = null;
+        } else {
+            Sorter sorter = new Sorter(this);
+            for (int x = 0; x < 800; x++) {
+                sorter.values[x] = (int) (800 - lines[x].getEndY() - 0.5);
+            }
+            sorterThread = sorter;
+            new Thread(sorter).start();
+        }
     }
 
     public void updateLine(int index, int value){
