@@ -1,6 +1,7 @@
 package sample;
 
 import com.sun.javafx.tk.Toolkit;
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.shape.Line;
 
@@ -29,7 +30,7 @@ public class Sorter extends Task{
         controller.updateComparisons(0);
         accesses = 0;
         controller.updateAccesses(0);
-        time = 0;
+        time = System.currentTimeMillis();
         controller.updateTime(0);
 
 
@@ -59,6 +60,7 @@ public class Sorter extends Task{
                 break;
             }
         }
+        Platform.runLater(() -> controller.updateTime(System.currentTimeMillis() - time));
     }
 
     private void bubbleSort1(){
@@ -139,35 +141,29 @@ public class Sorter extends Task{
 
 
     private boolean needToSwap(int index1, int index2){
-        try {
-            Thread.sleep(1);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        long delay = System.nanoTime();
+        //active waiting because of windows scheduler reasons.
+        while (System.nanoTime() < (delay + controller.delaySlider.getValue()*10000)){}
+
         comparisons += 1;
-        //controller.updateComparisons(comparisons);
-        return (values[index1] < values[index2]);
+        Platform.runLater(() -> controller.updateComparisons(comparisons));
+        return (values[index1] > values[index2]);
     }
 
     private void swap(int index1, int index2){
-        try {
-            Thread.sleep(1);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        long delay = System.nanoTime();
+        //active waiting because of windows scheduler reasons.
+        while (System.nanoTime() < (delay + controller.delaySlider.getValue()*10000)){}
 
         accesses+= 1;
-        //controller.updateAccesses(accesses);
+        Platform.runLater(() -> controller.updateAccesses(accesses));
 
         int tmp = values[index1];
         values[index1] = values[index2];
-        values[index2] = values[tmp];
+        values[index2] = tmp;
 
-        controller.lines[index1].endYProperty().set(800 - values[index1] + 0.5);
-        controller.lines[index2].endYProperty().set(800 - values[index2] + 0.5);
-
-        //controller.updateLine(index1, values[index1]);
-        //controller.updateLine(index2, values[index2]);
+        Platform.runLater(() -> controller.updateLine(index1, values[index1]));
+        Platform.runLater(() -> controller.updateLine(index2, values[index2]));
     }
 
     @Override

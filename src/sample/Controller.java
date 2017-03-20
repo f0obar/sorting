@@ -26,7 +26,7 @@ public class Controller {
     private Text seedField;
 
     @FXML
-    private Slider delaySlider;
+    public Slider delaySlider;
 
     @FXML
     private CheckBox keepSeed;
