@@ -62,6 +62,10 @@ public class Sorter extends Task {
                 heapSort();
                 break;
             }
+            case "Selection Sort": {
+                selectionSort();
+                break;
+            }
         }
         Platform.runLater(() -> controller.updateTime(System.currentTimeMillis() - time));
     }
@@ -205,6 +209,23 @@ public class Sorter extends Task {
                 } else {
                     break;
                 }
+            }
+        }
+    }
+
+    private void selectionSort() {
+        int i, j;
+
+        for (j = 0; j < values.length; j++) {
+            int iMin = j;
+            for (i = j + 1; i < values.length; i++) {
+                comparison();
+                if (values[i] < values[iMin]) {
+                    iMin = i;
+                }
+            }
+            if (iMin != j) {
+                swap(j, iMin);
             }
         }
     }
